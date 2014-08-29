@@ -7,6 +7,8 @@ function up -d "Update software to the latest versions"
             brew update
             brew upgrade
         end
+        type tlmgr >/dev/null
+        and  tlmgr update --self --all
         set -l plugins python vundle
         for plugin in $plugins
             if contains $plugin $fish_plugins
