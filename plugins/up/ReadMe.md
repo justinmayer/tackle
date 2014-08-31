@@ -6,7 +6,7 @@ It's hard to remember which parts of your system need updating, as well as the s
 
 ### Solution
 
-Use the `up` command to update Homebrew, Python, Vundle, and Fish completions:
+Use the `up` command to update Homebrew, Python, Vundle, Fish completions and TeXLive:
 
     up all
 
