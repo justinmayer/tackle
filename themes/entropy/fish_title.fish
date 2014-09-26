@@ -1,8 +1,9 @@
-function fish_title -d "Show PWD in title, preceded by process if not fish"
+function fish_title -d "Show host/process (if relevant) and PWD in title"
+    if [ $SSH_CONNECTION ]
+        echo "$__fish_prompt_hostname "
+    end
     if [ $_ != fish ]
         echo "$_: "
-        prompt_pwd
-    else
-        prompt_pwd
     end
+    prompt_pwd
 end
