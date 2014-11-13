@@ -114,11 +114,19 @@ function __budspencer_preexec -d 'Execute after hitting <Enter> before doing any
     commandline -f execute
 end
 
+#####################
+# => Fish termination
+#####################
+function __budspencer_on_termination -s HUP -s INT -s QUIT -s TERM --on-process %self -d 'Execute when shell terminates'
+    set -l item (contains -i %self $budspencer_sessions_active_pid ^ /dev/null)
+    __budspencer_detach_session $item
+end
+
 ######################
 # => Directory history
 ######################
 function __budspencer_create_dir_hist -v PWD -d 'Create directory history without duplicates'
-    if [ $pwd_hist_lock = false ]
+    if [ "$pwd_hist_lock" = false ]
         if contains $PWD $$dir_hist
             set -e $dir_hist[1][(contains -i $PWD $$dir_hist)]
         end
@@ -486,7 +494,7 @@ function __budspencer_prompt_bindmode -d 'Displays the current mode'
     case insert
         set budspencer_current_bindmode_color $budspencer_colors[5]
         echo -en $budspencer_cursors[2]
-        if [ $pwd_hist_lock = true ]
+        if [ "$pwd_hist_lock" = true ]
             set pwd_hist_lock false
             __budspencer_create_dir_hist
         end
@@ -679,5 +687,5 @@ set -x LOGIN $USER
 
 function fish_prompt -d 'Write out the left prompt of the budspencer theme'
     set -g last_status $status
-        echo -n -s (__budspencer_prompt_bindmode) (__budspencer_prompt_git_branch) (__budspencer_prompt_left_symbols) '' ' '
+    echo -n -s (__budspencer_prompt_bindmode) (__budspencer_prompt_git_branch) (__budspencer_prompt_left_symbols) '' ' '
 end
