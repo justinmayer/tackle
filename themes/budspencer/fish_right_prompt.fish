@@ -94,19 +94,20 @@ function __budspencer_git_status -d 'Check git status'
 end
 
 function __budspencer_is_git_stashed -d 'Check if there are stashed commits'
-    command git stash list ^ /dev/null  | wc -l
+    command git log --format="%gd" -g $argv 'refs/stash' -- ^ /dev/null | wc -l
 end
 
 function __budspencer_prompt_git_symbols -d 'Displays the git symbols'
     set -l is_repo (command git rev-parse --is-inside-work-tree ^/dev/null)
+    if [ -z $is_repo ]
+        return
+    end
+
     set -l git_ahead_behind (__budspencer_is_git_ahead_or_behind)
     set -l git_status (__budspencer_git_status)
     set -l git_stashed (__budspencer_is_git_stashed)
 
-    if begin
-        [ $is_repo=true ]
-        [ (expr $git_status[1] + $git_status[2] + $git_status[3] + $git_status[4] + $git_status[5] + $git_status[6]) -ne 0 ]
-    end
+    if [ (expr $git_status[1] + $git_status[2] + $git_status[3] + $git_status[4] + $git_status[5] + $git_status[6] + $git_stashed) -ne 0 ]
         set_color $budspencer_colors[3]
         echo -n ''
         set_color -b $budspencer_colors[3]
