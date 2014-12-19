@@ -10,14 +10,14 @@ function up -d "Update software to the latest versions"
         and  tlmgr update --self --all
         set -l plugins python vundle
         for plugin in $plugins
-            if contains $plugin $fish_plugins
+            if contains $plugin $tacklebox_plugins
                 up $plugin
             end
         end
         fish_update_completions
     else
         for arg in $argv
-            if contains $arg $fish_plugins
+            if contains $arg $tacklebox_plugins
                 switch $arg
                     case "python"
                         if test -z $VIRTUAL_ENV
@@ -32,13 +32,14 @@ function up -d "Update software to the latest versions"
                                 if [ $pkg = "Powerline" ]
                                     env PIP_REQUIRE_VIRTUALENV="" $sudo pip install --upgrade git+git://github.com/Lokaltog/powerline
                                 else
-                                    set -l pkgs $pkg $pkgs
+                                    set pkgs $pkg $pkgs
                                 end
                             end
                             if test -z $pkgs
                                 echo "No remaining Python packages to update."
                             else
                                 env PIP_REQUIRE_VIRTUALENV="" $sudo pip install --upgrade $pkgs
+                                set -e pkgs
                             end
                         else
                             if test -f requirements.txt
@@ -52,7 +53,7 @@ function up -d "Update software to the latest versions"
                         vim +BundleInstall! +BundleClean +qall
                 end
             else
-                echo "Could not locate that plugin in your fish_plugins setting."
+                echo "Could not locate that plugin in your tacklebox_plugins setting."
             end
         end
     end
