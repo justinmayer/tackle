@@ -1,12 +1,12 @@
 # up: https://github.com/justinmayer/tackle/tree/master/plugins/up
 function up -d "Update software to the latest versions"
     if contains "all" $argv
-        type brew >/dev/null
+        which brew >/dev/null
         and begin
             brew update
             brew upgrade
         end
-        type tlmgr >/dev/null
+        which tlmgr >/dev/null
         and  tlmgr update --self --all
         set -l plugins python vundle
         for plugin in $plugins
@@ -32,14 +32,14 @@ function up -d "Update software to the latest versions"
                                 if [ $pkg = "Powerline" ]
                                     env PIP_REQUIRE_VIRTUALENV="" $sudo pip install --upgrade git+git://github.com/Lokaltog/powerline
                                 else
-                                    set pkgs $pkg $pkgs
+                                    set python_packages_to_upgrade $python_packages_to_upgrade $pkg
                                 end
                             end
-                            if test -z $pkgs
+                            if test -z $python_packages_to_upgrade
                                 echo "No remaining Python packages to update."
                             else
-                                env PIP_REQUIRE_VIRTUALENV="" $sudo pip install --upgrade $pkgs
-                                set -e pkgs
+                                env PIP_REQUIRE_VIRTUALENV="" $sudo pip install --upgrade $python_packages_to_upgrade
+                                set -e python_packages_to_upgrade
                             end
                         else
                             if test -f requirements.txt
