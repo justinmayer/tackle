@@ -41,19 +41,24 @@ function __vf_project --description "Create a new project and virtualenv with th
         return 2
     else
         vf new $argv
-        mkdir $project_path
+        mkdir -p $project_path
         cd $project_path
     end
 end
 
 function __vf_lsprojects --description "List projects"
-    pushd $PROJECT_HOME
-    for i in *
-        if [ -d $i ]
-            echo $i
+    if [ -d $PROJECT_HOME ]
+        pushd $PROJECT_HOME
+        for i in *
+            if [ -d $i ]
+                echo $i
+            end
         end
+        popd
+    else
+        echo "PROJECT_HOME environment variable is set to non-existent directory: $PROJECT_HOME"
+        return 2
     end
-    popd
 end
 
 if set -q VIRTUALFISH_COMPAT_ALIASES
