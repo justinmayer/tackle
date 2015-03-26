@@ -23,7 +23,9 @@ Visit the [Tacklebox][] project for information on installation, usage, and othe
 
 ### Themes
 
-- **entropy** — shows `virtualenv`, Git, and Mercurial status; indicates if connected to another host via SSH
+- [entropy][] — shows `virtualenv`, Git, and Mercurial status; indicates if connected to another host via SSH
+- [budspencer][]
+- [urdh][]
 
 ## Contributing
 
@@ -38,3 +40,7 @@ Contributions to both Tackle and [Tacklebox][] are welcomed. If you'd like to co
 [Tacklebox]: https://github.com/justinmayer/tacklebox
 [virtualenv]: http://virtualenv.readthedocs.org/
 [Virtualfish]: https://github.com/adambrenecki/virtualfish
+[entropy]: https://github.com/justinmayer/tackle/tree/master/themes/entropy
+[budspencer]: https://github.com/justinmayer/tackle/tree/master/themes/budspencer
+[urdh]: https://github.com/justinmayer/tackle/tree/master/themes/urdh
+
