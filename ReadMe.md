@@ -29,7 +29,7 @@ Visit the [Tacklebox][] project for information on installation, usage, and othe
 
 ## Contributing
 
-Contributions to both Tackle and [Tacklebox][] are welcomed. If you'd like to contribute to the project, please review the [contributing guidelines][] thoroughly.
+Contributions to both Tackle and [Tacklebox][] are welcome. If you would like to contribute to the project, please review the [contributing guidelines][] thoroughly.
 
 [contributing guidelines]: https://github.com/justinmayer/tackle/blob/master/Contributing.md
 [docker]: http://www.docker.com/
