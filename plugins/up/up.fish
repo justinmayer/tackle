@@ -4,7 +4,7 @@ function up -d "Update software to the latest versions"
         which brew >/dev/null
         and begin
             brew update
-            brew upgrade
+            brew upgrade --all
         end
         which tlmgr >/dev/null
         and  tlmgr update --self --all
