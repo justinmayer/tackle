@@ -29,11 +29,7 @@ function up -d "Update software to the latest versions"
                             end
                             set -l outdated (env PIP_REQUIRE_VIRTUALENV="" pip list --outdated | cut -d ' ' -f 1)
                             for pkg in $outdated
-                                if [ $pkg = "Powerline" ]
-                                    env PIP_REQUIRE_VIRTUALENV="" $sudo pip install --upgrade git+git://github.com/Lokaltog/powerline
-                                else
-                                    set python_packages_to_upgrade $python_packages_to_upgrade $pkg
-                                end
+                                set python_packages_to_upgrade $python_packages_to_upgrade $pkg
                             end
                             if test -z $python_packages_to_upgrade
                                 echo "No remaining Python packages to update."
