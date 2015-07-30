@@ -21,3 +21,7 @@ Running `up python` makes the assumption that you don't need root permissions in
 If a [virtualenv][] is active, dependencies listed in `requirements.txt` will be upgraded. If no such file is found, any outdated packages in the virtual environment will be upgraded.
 
 If no virtual environment is active, global Python packages will be updated.
+
+
+[Homebrewed Python]: http://hackercodex.com/guide/python-development-environment-on-mac-osx/
+[virtualenv]: http://virtualenv.readthedocs.org/
