@@ -46,7 +46,7 @@ function up -d "Update software to the latest versions"
                             end
                         end
                     case "vundle"
-                        vim +BundleInstall! +BundleClean +qall
+                        env SHELL=/bin/bash vim +PluginInstall! +PluginClean +qall
                 end
             else
                 echo "Could not locate that plugin in your tacklebox_plugins setting."
