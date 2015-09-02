@@ -10,6 +10,7 @@ Visit the [Tacklebox][] project for information on installation, usage, and othe
 
 - **virtualfish** — [Virtualfish][] facilitates [virtualenv][] management and matches projects to virtual environments
 - **virtualhooks** — sources `$VIRTUAL_ENV/virtualhooks.fish` upon virtual environment activation (requires Virtualfish)
+- **z** - jump to often-used directories, weighted by “frecency”
 
 ### Plugins
 
