@@ -15,7 +15,7 @@ Visit the [Tacklebox][] project for information on installation, usage, and othe
 ### Plugins
 
 - **docker** — provides useful commands to manage [Docker][] containers and images
-- **extract** — expands/extracts a variety of bundled/compressed filetypes
+- **extract** — extracts a variety of archive file formats; `compress` function also included
 - **grc** — colorizes terminal output of ping, make, and other commands (must first install [grc][] via Homebrew/apt)
 - **hg** — facilitates interactions with [Mercurial][] repositories
 - **pip** – [pip][] command completions and handy wrapper functions
