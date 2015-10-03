@@ -1,7 +1,5 @@
 # Tackle
 
-[![Support via Gratipay](http://img.shields.io/badge/tips-accepted-brightgreen.svg)](https://www.gratipay.com/justinmayer/)
-
 Tackle is a repository of [fish shell][] functions, modules, plugins, and themes designed to be used with the [Tacklebox][] framework.
 
 Visit the [Tacklebox][] project for information on installation, usage, and other useful documentation.
