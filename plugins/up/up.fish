@@ -1,6 +1,8 @@
 # up: https://github.com/justinmayer/tackle/tree/master/plugins/up
 function up -d "Update software to the latest versions"
     if contains "all" $argv
+        git -C $HOME/.tacklebox pull > /dev/null
+        git -C $HOME/.tackle pull > /dev/null
         which brew >/dev/null
         and begin
             brew update
