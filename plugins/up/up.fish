@@ -8,6 +8,11 @@ function up -d "Update software to the latest versions"
             brew update
             brew upgrade --all
         end
+        which port >/dev/null
+        and begin
+            port selfupdate
+            port upgrade outdated
+        end
         which tlmgr >/dev/null
         and  tlmgr update --self --all
         set -l plugins python vundle
