@@ -21,6 +21,16 @@ function up -d "Update software to the latest versions"
                 up $plugin
             end
         end
+        which apt-get >/dev/null 2>&1
+        and begin
+            apt-get update
+            apt-get upgrade
+        end
+        which pacman >/dev/null 2>&1
+        and begin
+            sudo pacman -Syy
+            sudo pacman -Syu
+        end
         fish_update_completions
     else
         for arg in $argv
