@@ -18,6 +18,7 @@ Visit the [Tacklebox][] project for information on installation, usage, and othe
 - **hg** — facilitates interactions with [Mercurial][] repositories
 - **pip** – [Pip][] command completions and handy wrapper functions
 - **python** — functions to run simple HTTP server and clean `.pyc` files
+- **sdl** — sudo the last command in history
 - **up** — update Fish completions, Homebrew, Python packages, and Vim plugins (via Vundle)
 
 ### Themes
