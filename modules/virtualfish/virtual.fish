@@ -54,9 +54,16 @@ function vf --description "VirtualFish: fish plugin to manage virtualenvs"
 	set -l funcname "__vf_$sc"
 	set -l scargs
 
-	if begin; [ (count $argv) -eq 0 ]; or [ $sc = "--help" ]; or [ $sc = "-h" ]; end
+	if test (count $argv) -eq 0
 		# If called without arguments, print usage
-		vf help
+		echo "Usage: vf <command> [<args>]"
+		echo
+		echo "Available commands:"
+		echo
+		for sc in (functions -a | sed -n '/__vf_/{s///g;p;}')
+			set -l helptext (functions "__vf_$sc" | head -n 1 | sed -E "s|.*'(.*)'.*|\1|")
+			printf "    %-15s %s\n" $sc (set_color 555)$helptext(set_color normal)
+		end
 		return
 	end
 
@@ -253,28 +260,6 @@ function __vf_addpath --description "Adds a path to sys.path in this virtualenv"
 	end
 end
 
-function __vf_all --description "Run a command in all virtualenvs sequentially"
-	if test (count $argv) -lt 1
-        echo "You need to supply a command."
-        return 1
-    end
-
-    if set -q VIRTUAL_ENV
-        set -l old_env (basename $VIRTUAL_ENV)
-    end
-
-    for env in (vf ls)
-        vf activate $env
-        eval $argv
-    end
-
-    if set -q old_env
-        vf activate $old_env
-    else
-        vf deactivate
-    end
-end
-
 # 'vf connect' command
 # Used by the project management and auto-activation plugins
 
@@ -291,23 +276,10 @@ function __vf_connect --description "Connect this virtualenv to the current dire
     end
 end
 
-function __vf_help --description "Print VirtualFish usage information"
-	echo "Usage: vf <command> [<args>]"
-	echo
-	echo "Available commands:"
-	echo
-	for sc in (functions -a | sed -n '/__vf_/{s///g;p;}')
-		set -l helptext (functions "__vf_$sc" | head -n 1 | sed -E "s|.*'(.*)'.*|\1|")
-		printf "    %-15s %s\n" $sc (set_color 555)$helptext(set_color normal)
-	end
-	echo
-	echo "For full documentation, see: http://virtualfish.readthedocs.org/en/latest/"
-end
-
 ################
 # Autocomplete
 # Based on https://github.com/zmalltalker/fish-nuggets/blob/master/completions/git.fish
-function __vfsupport_setup_autocomplete --on-event virtualfish_did_setup_plugins
+begin
 	function __vfcompletion_needs_command
 		set cmd (commandline -opc)
 			if test (count $cmd) -eq 1 -a $cmd[1] = 'vf'
