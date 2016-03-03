@@ -1,10 +1,17 @@
 # up: https://github.com/justinmayer/tackle/tree/master/plugins/up
 function up -d "Update software to the latest versions"
     if contains "all" $argv
+        git -C $HOME/.tacklebox pull > /dev/null
+        git -C $HOME/.tackle pull > /dev/null
         which brew >/dev/null
         and begin
             brew update
-            brew upgrade
+            brew upgrade --all
+        end
+        which port >/dev/null
+        and begin
+            port selfupdate
+            port upgrade outdated
         end
         which tlmgr >/dev/null
         and  tlmgr update --self --all
@@ -29,14 +36,10 @@ function up -d "Update software to the latest versions"
                             end
                             set -l outdated (env PIP_REQUIRE_VIRTUALENV="" pip list --outdated | cut -d ' ' -f 1)
                             for pkg in $outdated
-                                if [ $pkg = "Powerline" ]
-                                    env PIP_REQUIRE_VIRTUALENV="" $sudo pip install --upgrade git+git://github.com/Lokaltog/powerline
-                                else
-                                    set python_packages_to_upgrade $python_packages_to_upgrade $pkg
-                                end
+                                set python_packages_to_upgrade $python_packages_to_upgrade $pkg
                             end
-                            if test -z $python_packages_to_upgrade
-                                echo "No remaining Python packages to update."
+                            if test -z "$python_packages_to_upgrade"
+                                echo "Python packages to up-to-date."
                             else
                                 env PIP_REQUIRE_VIRTUALENV="" $sudo pip install --upgrade $python_packages_to_upgrade
                                 set -e python_packages_to_upgrade
@@ -50,7 +53,7 @@ function up -d "Update software to the latest versions"
                             end
                         end
                     case "vundle"
-                        vim +BundleInstall! +BundleClean +qall
+                        env SHELL=/bin/bash vim +PluginInstall! +PluginClean +qall
                 end
             else
                 echo "Could not locate that plugin in your tacklebox_plugins setting."

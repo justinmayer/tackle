@@ -2,25 +2,30 @@
 function extract -d "Expand or extract bundled & compressed files"
     for file in $argv
         if test -f $file
-            echo -s "Extracting " (set_color --bold blue) $file (set_color normal)
+            echo -s "Extracting: " (set_color --bold blue) $file (set_color normal)
             switch $file
                 case *.tar
                     tar -xf $file
                 case *.tar.xz *.txz
+                    # Use pixz for parallel extraction, if available
                     set os (uname)
                     if [ $os = "Darwin" ]
-                        type gtar >/dev/null
-                        and gtar -Jxf $file
-                        or echo "Must install GNU tar via: brew install gtar"
+                        command -s pixz gtar >/dev/null
+                        and gtar -Ipixz -xf $file
+                        or tar -Jxf $file
                     else
-                        tar -Jxf $file
+                        command -s pixz >/dev/null
+                        and tar -Ipixz -xf $file
+                        or tar -Jxf $file
                     end
                 case *.tar.bz2 *.tbz *.tbz2
                     tar -jxf $file
                 case *.tar.gz *.tgz
                     tar -zxf $file
                 case *.xz
-                    unxz $file
+                    command -s pixz >/dev/null
+                    and pixz -d $file
+                    or unxz $file
                 case *.bz2
                     bunzip2 $file
                 case *.gz
