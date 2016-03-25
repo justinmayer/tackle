@@ -3,23 +3,33 @@ function up -d "Update software to the latest versions"
     if contains "all" $argv
         git -C $HOME/.tacklebox pull > /dev/null
         git -C $HOME/.tackle pull > /dev/null
-        which brew >/dev/null
+        which brew >/dev/null 2>&1
         and begin
             brew update
             brew upgrade --all
         end
-        which port >/dev/null
+        which port >/dev/null 2>&1
         and begin
             port selfupdate
             port upgrade outdated
         end
-        which tlmgr >/dev/null
+        which tlmgr >/dev/null 2>&1
         and  tlmgr update --self --all
         set -l plugins python vundle
         for plugin in $plugins
             if contains $plugin $tacklebox_plugins
                 up $plugin
             end
+        end
+        which apt-get >/dev/null 2>&1
+        and begin
+            apt-get update
+            apt-get upgrade
+        end
+        which pacman >/dev/null 2>&1
+        and begin
+            sudo pacman -Syy
+            sudo pacman -Syu
         end
         fish_update_completions
     else
