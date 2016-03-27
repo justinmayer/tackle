@@ -49,7 +49,7 @@ function up -d "Update software to the latest versions"
                                 set python_packages_to_upgrade $python_packages_to_upgrade $pkg
                             end
                             if test -z "$python_packages_to_upgrade"
-                                echo "Python packages to up-to-date."
+                                echo "Python packages are up-to-date."
                             else
                                 env PIP_REQUIRE_VIRTUALENV="" $sudo pip install --upgrade $python_packages_to_upgrade
                                 set -e python_packages_to_upgrade
