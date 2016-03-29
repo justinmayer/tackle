@@ -307,7 +307,7 @@ end
 ################
 # Autocomplete
 # Based on https://github.com/zmalltalker/fish-nuggets/blob/master/completions/git.fish
-function __vfsupport_setup_autocomplete --on-event virtualfish_did_setup_plugins
+begin
 	function __vfcompletion_needs_command
 		set cmd (commandline -opc)
 			if test (count $cmd) -eq 1 -a $cmd[1] = 'vf'
