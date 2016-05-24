@@ -25,6 +25,15 @@ Visit the [Tacklebox][] project for information on installation, usage, and othe
 
 - **entropy** — shows `virtualenv`, Git, and Mercurial status; indicates if connected to another host via SSH
 
+### Functions
+
+These are helper functions, mainly to be used inside of configuration and other functions:
+
+- **_confirmation** — confirmation prompt for use in interactive scripts
+- **_logo** — prints a colorful Fish shell logo as ASCII art
+- **_prepend_path** — prepend the given path, if it exists, to the specified path list
+
+
 ## Contributing
 
 Contributions to both Tackle and [Tacklebox][] are welcomed. If you'd like to contribute to the project, please review the [contributing guidelines][] thoroughly.

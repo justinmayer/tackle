@@ -1,18 +1,35 @@
 # up: https://github.com/justinmayer/tackle/tree/master/plugins/up
 function up -d "Update software to the latest versions"
     if contains "all" $argv
-        which brew >/dev/null
+        git -C $HOME/.tacklebox pull > /dev/null
+        git -C $HOME/.tackle pull > /dev/null
+        which brew >/dev/null 2>&1
         and begin
             brew update
-            brew upgrade
+            brew upgrade --all
         end
-        which tlmgr >/dev/null
+        which port >/dev/null 2>&1
+        and begin
+            port selfupdate
+            port upgrade outdated
+        end
+        which tlmgr >/dev/null 2>&1
         and  tlmgr update --self --all
         set -l plugins python vundle
         for plugin in $plugins
             if contains $plugin $tacklebox_plugins
                 up $plugin
             end
+        end
+        which apt-get >/dev/null 2>&1
+        and begin
+            apt-get update
+            apt-get upgrade
+        end
+        which pacman >/dev/null 2>&1
+        and begin
+            sudo pacman -Syy
+            sudo pacman -Syu
         end
         fish_update_completions
     else
@@ -29,14 +46,10 @@ function up -d "Update software to the latest versions"
                             end
                             set -l outdated (env PIP_REQUIRE_VIRTUALENV="" pip list --outdated | cut -d ' ' -f 1)
                             for pkg in $outdated
-                                if [ $pkg = "Powerline" ]
-                                    env PIP_REQUIRE_VIRTUALENV="" $sudo pip install --upgrade git+git://github.com/Lokaltog/powerline
-                                else
-                                    set python_packages_to_upgrade $python_packages_to_upgrade $pkg
-                                end
+                                set python_packages_to_upgrade $python_packages_to_upgrade $pkg
                             end
-                            if test -z $python_packages_to_upgrade
-                                echo "No remaining Python packages to update."
+                            if test -z "$python_packages_to_upgrade"
+                                echo "Python packages are up-to-date."
                             else
                                 env PIP_REQUIRE_VIRTUALENV="" $sudo pip install --upgrade $python_packages_to_upgrade
                                 set -e python_packages_to_upgrade
@@ -50,7 +63,7 @@ function up -d "Update software to the latest versions"
                             end
                         end
                     case "vundle"
-                        vim +BundleInstall! +BundleClean +qall
+                        env SHELL=/bin/bash vim +PluginInstall! +PluginClean +qall
                 end
             else
                 echo "Could not locate that plugin in your tacklebox_plugins setting."
