@@ -6,7 +6,7 @@ function up -d "Update software to the latest versions"
         which brew >/dev/null 2>&1
         and begin
             brew update
-            brew upgrade --all
+            brew upgrade
         end
         which port >/dev/null 2>&1
         and begin
