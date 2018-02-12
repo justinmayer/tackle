@@ -94,7 +94,8 @@ function __budspencer_git_status -d 'Check git status'
 end
 
 function __budspencer_is_git_stashed -d 'Check if there are stashed commits'
-    command git log --format="%gd" -g $argv 'refs/stash' -- ^ /dev/null | wc -l
+    set -l isgitstashed (string trim -l (command git log --format="%gd" -g $argv 'refs/stash' -- ^ /dev/null | wc -l))
+    echo -n $isgitstashed
 end
 
 function __budspencer_prompt_git_symbols -d 'Displays the git symbols'
