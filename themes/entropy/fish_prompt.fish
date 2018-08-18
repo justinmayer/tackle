@@ -30,33 +30,39 @@ function fish_prompt -d "Write out the prompt"
         set -g __fish_prompt_gray (set_color -o black)
     end
 
-    # If vcprompt detects PWD is a git/hg repo, call native VCS prompt function
-    set -g __vcsystem (vcprompt -f "%n")
+    # Git prompt settings
+    _ifnotset __fish_git_prompt_showdirtystate "True"
+    _ifnotset __fish_git_prompt_char_dirtystate "!"
+    _ifnotset __fish_git_prompt_color_dirtystate "blue"
+    _ifnotset __fish_git_prompt_showuntrackedfiles "True"
+    _ifnotset __fish_git_prompt_char_untrackedfiles "?"
+    _ifnotset __fish_git_prompt_color_untrackedfiles "blue"
+    _ifnotset __fish_git_prompt_color_branch "magenta"
 
-    if test -z $__vcsystem
-        set -g __vcprompt
+    # Only use vcprompt if __use_vcprompt is set; otherwise assume Git-only
+    if not set -q __use_vcprompt
+        set -g __vcprompt $__fish_prompt_gray' on '(__fish_git_prompt "%s" | sed 's/ //')
     else
+        # If vcprompt detects PWD is a git/hg repo, call native VCS prompt function
+        set -g __vcsystem (vcprompt -f "%n")
 
-        switch $__vcsystem
+        if test -z $__vcsystem
+            set -g __vcprompt
+        else
 
-            case 'git*'
+            switch $__vcsystem
 
-            set -g __fish_git_prompt_showdirtystate "True"
-            set -g __fish_git_prompt_char_dirtystate "!"
-            set -g __fish_git_prompt_color_dirtystate "blue"
-            set -g __fish_git_prompt_showuntrackedfiles "True"
-            set -g __fish_git_prompt_char_untrackedfiles "?"
-            set -g __fish_git_prompt_color_untrackedfiles "blue"
-            set -g __fish_git_prompt_color_branch "magenta"
-            set -g __vcprompt $__fish_prompt_gray' on '(__fish_git_prompt "%s" | sed 's/ //')
+                case 'git*'
 
-            case 'hg*'
+                set -g __vcprompt $__fish_prompt_gray' on '(__fish_git_prompt "%s" | sed 's/ //')
 
-            set hg_promptstring "$__fish_prompt_gray< on $__fish_prompt_repo_branch_color<bookmark>>$__fish_prompt_repo_status_color<status|modified|unknown><update>$__fish_prompt_normal"
-            set -g __vcprompt (hg prompt --angle-brackets $hg_promptstring)
+                case 'hg*'
 
+                set hg_promptstring "$__fish_prompt_gray< on $__fish_prompt_repo_branch_color<bookmark>>$__fish_prompt_repo_status_color<status|modified|unknown><update>$__fish_prompt_normal"
+                set -g __vcprompt (hg prompt --angle-brackets $hg_promptstring)
+
+            end
         end
-
     end
 
     switch $USER
