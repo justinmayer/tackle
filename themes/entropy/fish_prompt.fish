@@ -1,4 +1,4 @@
-# Entropy prompt theme, by Justin Mayer <http://justinmayer.com/>
+# Entropy prompt theme, by Justin Mayer <https://justinmayer.com/>
 function fish_prompt -d "Write out the prompt"
 
     # Just calculate these once, to save a few cycles when displaying the prompt
@@ -31,10 +31,10 @@ function fish_prompt -d "Write out the prompt"
     end
 
     # Git prompt settings
-    _ifnotset __fish_git_prompt_showdirtystate "True"
+    _ifnotset __fish_git_prompt_showdirtystate "true"
     _ifnotset __fish_git_prompt_char_dirtystate "!"
     _ifnotset __fish_git_prompt_color_dirtystate "blue"
-    _ifnotset __fish_git_prompt_showuntrackedfiles "True"
+    _ifnotset __fish_git_prompt_showuntrackedfiles "true"
     _ifnotset __fish_git_prompt_char_untrackedfiles "?"
     _ifnotset __fish_git_prompt_color_untrackedfiles "blue"
     _ifnotset __fish_git_prompt_color_branch "magenta"
